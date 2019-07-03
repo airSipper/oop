@@ -120,7 +120,7 @@ def setup_game():
         speak(words['sides'])
         sides = int(input("How many sides does the game dice have? : "))
 
-        if sides != 0:
+        if sides > 0:
             dice_sides = sides
             game_dice_sides = "'{0} sided dice.'".format(str(dice_sides))
             speak(game_dice_sides)
