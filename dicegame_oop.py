@@ -1,8 +1,9 @@
 """
 linux dice game
 
-basically want to remake 'dicegame.py' with OOP
+basically want to remake 'dice game' with OOP
 - have 2 player pvp OR vs the computer
+
 - requires espeak
 """
 
@@ -155,12 +156,14 @@ class Game:
         print("                                       [2] 1 PLAYER vs COMPUTER" + bcolors.ENDC)
 
         try:
-            choice = str(input(""))
+            choice = str(input("                                   >>> "))
             if choice == '1':
                 speak(words['pvp'])
                 self.players.append(Player(1))
                 self.players.append(Player(2))
+
             elif choice == '2':
+                speak(words['pvc'])
                 self.players.append(Player(1))
                 self.players.append(Computer(2))
             else:
@@ -183,17 +186,14 @@ class Game:
 
         try:
             sides = int(input(bcolors.WARNING + "\n\t\t\t\tHow many sides does the game dice have? : " + bcolors.ENDC))
-            if sides > 1 and sides < 1000:
-                try:
-                    self.dice.sides = sides
-                    dice_sides = "'{0} sided dice.'".format(str(self.dice.sides))
-                    speak(dice_sides)
-                except TypeError:
-                    speak(words['unfortunate'])
-                    self.set_dice()
+            if sides in range(2, 1001):
+                self.dice.sides = sides
+                dice_sides = "'{0} sided dice.'".format(str(self.dice.sides))
+                speak(dice_sides)
             else:
                 speak(words['unfortunate'])
                 self.set_dice()
+
         except ValueError:
             speak(words['invalid'])
             self.set_dice()
@@ -210,20 +210,17 @@ class Game:
         try:
             matches = int(input(bcolors.WARNING + "\n\t\t\t\t\tBest out of how many games? : " + bcolors.ENDC))
 
-            if matches > 1:
+            if matches in range(1, 101):
                 self.best_of = matches
                 self.match_count = matches
-                try:
-                    game_matches = "'Best of {}'".format(str(self.best_of))
-                    speak(game_matches)
-                except TypeError:
-                    speak(words['unfortunate'])
-                    self.set_matches()
+                game_matches = "'Best of {}'".format(str(self.best_of))
+                speak(game_matches)
+
             elif matches < 1:
                 speak(words['unfortunate'])
                 self.set_matches()
             else:
-                print("something has gone wrong. Quitting....")
+                print("\nSomething has gone wrong. Quitting....")
                 sys.exit(0)
 
         except ValueError:
@@ -238,6 +235,7 @@ class Game:
         """ print game title and stats """
         p1 = bcolors.RED + 'PLAYER 1 WINS' + bcolors.ENDC
         if type(self.players[1]) != Computer:
+
             p2 = bcolors.OKBLUE + 'PLAYER 2 WINS' + bcolors.ENDC
         else:
             p2 = bcolors.OKBLUE + 'COMPUTER WINS' + bcolors.ENDC
@@ -245,12 +243,12 @@ class Game:
         print("\n====================================================================================================")
         print("MATCHES REMAINING: {}".format(self.match_count))
         print("\n      ||            {}: {}                ||                   {}: {}       ||".format(p1,
-        self.players[0].score, p2, self.players[1].score))
+                                                                    self.players[0].score, p2, self.players[1].score))
         print("====================================================================================================\n")
 
     def print_nums(self, roll):
         """ prints the dice roll numbers side by side """
-        lines = [numbers[i].splitlines() for i in roll]
+        lines = [dice_nums[i].splitlines() for i in roll]
         for l in zip(*lines):
             print(*l, sep='')
 
@@ -284,7 +282,7 @@ class Game:
         self.title()
         self.game_stats()
 
-        if p_num == 2 and type(self.players[1] == Computer):
+        if p_num == 2 and type(self.players[1]) == Computer:
             print("Computer's turn..")
             time.sleep(1)
             self.players[1].roll = self.dice.roll()
@@ -378,7 +376,7 @@ class Game:
 
             else:
                 print(bcolors.OKGREEN + "\t\t\t\t\t===================")
-                print("\t\t\t\t\t== DRAW! PLAY AGAIN ==")
+                print("\t\t\t\t\t= DRAW! PLAY AGAIN =")
                 print("\t\t\t\t\t===================" + bcolors.ENDC)
                 speak(words['draw'])
 
@@ -450,12 +448,14 @@ class Game:
             print("quitting...")
             sys.exit(0)
 
-
+2
 def speak(game_words):
     os.system("espeak " + game_words)
 
 
 words = {
+
+    "pvc"         : "'do you think you can beat me? i guess we'll find out.'",
     "c_match_win" : "'ha ha ha, i won the match'",
     "computer_win": "'i won that game,'",
     "pvp"         : "'2 player game,'",
@@ -479,7 +479,7 @@ words = {
 }
 
 
-numbers = {
+dice_nums = {
 
     1: """
                              11  
@@ -552,6 +552,7 @@ numbers = {
                              000  """
 
 }
+
 
 if __name__ == '__main__':
     game = Game()
