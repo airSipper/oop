@@ -1,7 +1,8 @@
-"""
-dice game for linux
---- requires espeak
-"""
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+# a simple dice game for linux
+# requires espeak
 
 import random
 import os
@@ -89,7 +90,6 @@ class Text:
                                                                                                """ + bcolors.ENDC
 
 
-
 class Dice:
     """ class for the game dice """
     def __init__(self):
@@ -152,16 +152,17 @@ class Game:
         print("                                       [2] 1 PLAYER vs COMPUTER" + bcolors.ENDC)
 
         try:
-            choice = str(input("                                   >>> "))
+            choice = str(input("\n                                    >>> "))
             if choice == '1':
                 speak(words['pvp'])
                 self.players.append(Player(1))
                 self.players.append(Player(2))
 
             elif choice == '2':
-                speak(words['pvc'])
+                speak(words['player_v_comp'])
                 self.players.append(Player(1))
                 self.players.append(Computer(2))
+
             else:
                 speak(words['invalid'])
                 self.set_players()
@@ -182,6 +183,7 @@ class Game:
 
         try:
             sides = int(input(bcolors.WARNING + "\n\t\t\t\tHow many sides does the game dice have? : " + bcolors.ENDC))
+
             if sides in range(2, 1001):
                 self.dice.sides = sides
                 dice_sides = "'{0} sided dice.'".format(str(self.dice.sides))
@@ -238,7 +240,7 @@ class Game:
 
         print("\n====================================================================================================")
         print("MATCHES REMAINING: {}".format(self.match_count))
-        print("\n      ||            {}: {}                ||                   {}: {}       ||".format(p1,
+        print("\n      ||            {}: {}              ||                 {}: {}          ||".format(p1,
                                                                     self.players[0].score, p2, self.players[1].score))
         print("====================================================================================================\n")
 
@@ -337,7 +339,7 @@ class Game:
     def check_game_win(self):
         """ check to see which player won the -game-  """
 
-        if type(self.players[1] == Computer) and self.players[1].roll > self.players[0].roll:
+        if type(self.players[1]) == Computer and self.players[1].roll > self.players[0].roll:
             self.players[1].score +=1
             self.match_count -= 1
             print(bcolors.OKBLUE + "\t\t\t\t\t===================")
@@ -381,7 +383,7 @@ class Game:
         os.system("clear")
         self.game_over()
 
-        if p_num == 2 and type(self.players[1] == Computer):
+        if p_num == 2 and type(self.players[1]) == Computer:
             print(Text.computer_wins)
             speak(words['c_match_win'])
             self.play_again()
@@ -435,9 +437,12 @@ class Game:
                 print("\n\n")
                 sys.exit(0)
             else:
-                print("Something went wrong. Quitting...")
-                speak(['bye'])
-                sys.exit(0)
+                speak(words['invalid'])
+                self.play_again()
+
+        except TypeError:
+            speak(words['invalid'])
+            self.play_again()
 
         except KeyboardInterrupt:
             speak('bye')
@@ -451,27 +456,27 @@ def speak(game_words):
 
 words = {
 
-    "pvc"         : "'do you think you can beat me? i guess we'll find out.'",
-    "c_match_win" : "'ha ha ha, i won the match'",
-    "computer_win": "'i won that game,'",
-    "pvp"         : "'2 player game,'",
-    "bye"         : "'goodbye'",
-    "of_course"   : "'of course you would,'",
-    "play_again"  : "'would you like to play again?'",
-    "best_of"     : "'best out of how many games?'",
-    "sides"       : "'How many sides does the game dice have?'",
-    "invalid"     : "'not a valid choice, try again.'",
-    "unfortunate" : "'Unfortunately, that will not work'",
-    "match_draw"  : "'the match was a draw, it will go to golden game'",
-    "welcome"     : "'Welcome, to the Dice Game. Player with the highest roll, will win.'",
-    "stupid"      : "'that is really stupid.'",
-    "roll"        : "'roll the dice'",
-    "p2win_game"  : "'player two wins'",
-    "p1win_game"  : "'player one wins'",
-    "p1win_match" : "'Congratulations player one. You won the match,'",
-    "p2win_match" : "'Congratulations player two. You won the match,'",
-    "game_over"   : "'game,over.'",
-    "draw"        : "'the game was a tie, play the last game again.'"
+    "c_match_win"  : "'ha ha, ha, i won, the match'",
+    "player_v_comp": "'do you think you can beat me? i guess we will find out.'",
+    "computer_win" : "'i won that game,'",
+    "pvp"          : "'2 player game,'",
+    "bye"          : "'goodbye'",
+    "of_course"    : "'of course you would,'",
+    "play_again"   : "'would you like to play again?'",
+    "best_of"      : "'best out of how many games?'",
+    "sides"        : "'How many sides does the game dice have?'",
+    "invalid"      : "'not a valid choice, try again.'",
+    "unfortunate"  : "'Unfortunately, that will not work'",
+    "match_draw"   : "'the match was a draw, it will go to golden game'",
+    "welcome"      : "'Welcome, to the Dice Game. Player with the highest roll, will win.'",
+    "stupid"       : "'that is really stupid.'",
+    "roll"         : "'roll the dice'",
+    "p2win_game"   : "'player two wins'",
+    "p1win_game"   : "'player one wins'",
+    "p1win_match"  : "'Congratulations player one. You won the match,'",
+    "p2win_match"  : "'Congratulations player two. You won the match,'",
+    "game_over"    : "'game,over.'",
+    "draw"         : "'the game was a tie, play the last game again.'"
 }
 
 
