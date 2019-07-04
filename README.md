@@ -1,2 +1,2 @@
-# shit-games
-a collection of random games
+# crap-games
+i'll put all the crap games i make here
