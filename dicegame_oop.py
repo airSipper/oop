@@ -1,10 +1,6 @@
 """
-linux dice game
-
-basically want to remake 'dice game' with OOP
-- have 2 player pvp OR vs the computer
-
-- requires espeak
+dice game for linux
+--- requires espeak
 """
 
 import random
