@@ -1,9 +1,8 @@
 """
 linux dice game
 
-basically want to remake 'dice game' with OOP
+basically want to remake 'dicegame.py' with OOP
 - have 2 player pvp OR vs the computer
-
 - requires espeak
 """
 
@@ -554,7 +553,6 @@ numbers = {
 
 }
 
-
-game = Game()
-game.start()
-
+if __name__ == '__main__':
+    game = Game()
+    game.start()
