@@ -444,7 +444,7 @@ class Game:
             print("quitting...")
             sys.exit(0)
 
-2
+
 def speak(game_words):
     os.system("espeak " + game_words)
 
