@@ -371,9 +371,9 @@ class Game:
                 time.sleep(2)
 
             else:
-                print(bcolors.OKGREEN + "\t\t\t\t\t===================")
+                print(bcolors.OKGREEN + "\t\t\t\t\t====================")
                 print("\t\t\t\t\t= DRAW! PLAY AGAIN =")
-                print("\t\t\t\t\t===================" + bcolors.ENDC)
+                print("\t\t\t\t\t====================" + bcolors.ENDC)
                 speak(words['draw'])
 
     def match_win(self, p_num):
