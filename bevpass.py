@@ -20,7 +20,7 @@ digits = list(string.digits)
 symbols = list(string.punctuation)
 
 # all digit combos
-digit_combos = [''.join(i) for i in itertools.product(digits, repeat = 1)]
+digit_combos = [''.join(i) for i in itertools.product(digits, repeat = 2)]
 
 # all lowercase combinations
 lower_combos = [''.join(i) for i in itertools.product(lower, repeat = 2)]
